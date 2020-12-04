@@ -1,4 +1,4 @@
-for num in range(4, 26):
+for num in range(5, 26):
     n = "{:02d}".format(num)
 
     main_file = """import sys
@@ -20,7 +20,8 @@ def entry():
 
 
 if __name__ == "__main__":
-    entry()""".format(n, n)
+    entry()
+""".format(n, n)
 
     main_filename = "day{}.py".format(n)
     with open(main_filename, 'w') as f:
@@ -30,12 +31,14 @@ if __name__ == "__main__":
 
 
 def test_{}a():
-    #assert(part_a('data/day{}_test1.txt') == 0)
+    # assert(part_a('data/day{}_test1.txt') == 0)
     pass
 
+
 def test_{}b():
-    #assert(part_b('data/day{}_test1.txt') == 0)
-    pass""".format(n, n, n, n, n)
+    # assert(part_b('data/day{}_test1.txt') == 0)
+    pass
+""".format(n, n, n, n, n)
 
     test_filename = "../../tests/func/test_day{}.py".format(n)
     with open(test_filename, 'w') as f:

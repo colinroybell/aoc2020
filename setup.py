@@ -9,7 +9,7 @@ setup(
     description='Advent of Code 2020',
 
     author='Colin Bell',
-  
+
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
 )
