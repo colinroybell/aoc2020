@@ -27,3 +27,9 @@ Optimisations:
 * Do the visibility checking once, and maintain a list of the neighbouring seats we care about.
 * On each pass, compile a list of seats which can see one that has changed state, and then only
 run the update on those in the next pass.
+
+## Day 13
+
+A lot of people did this via the Chinese Remainder Theorem, and that's more efficient, but given the relatively small numbers involved, the direct search is still almost instantaneous. For the inputs provided, the bus numbers are coprime, so you could just multiply them rather than working out the LCM.
+
+Perhaps worth tidying up a bit.
