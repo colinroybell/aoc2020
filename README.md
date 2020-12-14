@@ -33,3 +33,7 @@ run the update on those in the next pass.
 A lot of people did this via the Chinese Remainder Theorem, and that's more efficient, but given the relatively small numbers involved, the direct search is still almost instantaneous. For the inputs provided, the bus numbers are coprime, so you could just multiply them rather than working out the LCM.
 
 Perhaps worth tidying up a bit.
+
+## Day 14
+
+There are some more idiomatic ways of doing the Python bit-twiddling in the solutions thread.
