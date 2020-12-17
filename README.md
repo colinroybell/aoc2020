@@ -37,3 +37,16 @@ Perhaps worth tidying up a bit.
 ## Day 14
 
 There are some more idiomatic ways of doing the Python bit-twiddling in the solutions thread.
+
+## Day 15
+
+Added a much simpler python version as alternative
+
+## Day 16
+
+Much better to have ticket and range as classes and abstract everything out
+
+## Day 17
+
+A lot of cut and paste - could be simplified?
+Here and others: want a dict which assumes zero for unreferenced values.
