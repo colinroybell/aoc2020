@@ -50,3 +50,7 @@ Much better to have ticket and range as classes and abstract everything out
 
 A lot of cut and paste - could be simplified?
 Here and others: want a dict which assumes zero for unreferenced values.
+
+## Day 18
+
+My solution is iterative with a lot of regexs, so we are effectively reparsing the entire string multiple times. More efficient for complex expressions would be to lex it and construct a tree.
