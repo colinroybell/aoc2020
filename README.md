@@ -53,4 +53,20 @@ Here and others: want a dict which assumes zero for unreferenced values.
 
 ## Day 18
 
-My solution is iterative with a lot of regexs, so we are effectively reparsing the entire string multiple times. More efficient for complex expressions would be to lex it and construct a tree.
+My solution is iterative with a lot of regexs, so we are effectively reparsing the entire string multiple times. More efficient for complex expressions would be to lex it and construct a tree. Or, as some have done, create new objects which have different priorities and just run eval.
+
+## Day 19
+
+Need to add tests in 
+
+## Day 20
+
+Part a only for now and no tests.
+
+## Day 22
+
+Review code
+
+## Day 23
+
+Refactor code to combine two parts. Add tests.
