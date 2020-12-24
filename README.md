@@ -61,7 +61,7 @@ Need to add tests in
 
 ## Day 20
 
-Part a only for now and no tests.
+Part a only for now and no tests. Needs tidying up - want one single rotate function
 
 ## Day 22
 
@@ -70,3 +70,7 @@ Review code
 ## Day 23
 
 Refactor code to combine two parts. Add tests.
+
+## Day 24
+
+Again add tests.

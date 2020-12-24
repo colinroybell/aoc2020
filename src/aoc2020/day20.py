@@ -25,6 +25,38 @@ class Tile:
         ref = (state//4)*4
         rot  = state%4
         return self.edges[ref + (rot + dir)%4]
+
+    # Horrendous. Fix me.
+    def inner(self, state):
+        grid = [['.' for i in range(0,8)] for j in range(0,8)]
+
+        for y in range(0,8):
+            for x in range(0,8):
+                if state == 0:
+                    grid[y][x] = self.lines[y+1][x+1]
+                if state == 3:
+                    grid[y][x] = self.lines[8-x][y+1]
+                if state == 2:
+                    grid[y][x] = self.lines[8-y][8-x]
+                if state == 1:
+                    grid[y][x] = self.lines[x+1][8-y]    
+                if state == 4:
+                    grid[y][x] = self.lines[y+1][8-x]
+                if state == 7:
+                    grid[y][x] = self.lines[8-x][8-y]
+                if state == 6:
+                    grid[y][x] = self.lines[8-y][x+1]
+                if state == 5:
+                    grid[y][x] = self.lines[x+1][y+1]
+
+        inner = []
+        for y in range(0,8):
+            line = ""
+            for x in range(0,8):
+                line += grid[y][x]
+            inner.append(line) 
+
+        return inner          
         
 class Grid:
     def __init__ (self,size,tiles):
@@ -75,14 +107,85 @@ class Grid:
                             self.item[loc[0]][loc[1]] = (0,0)
                             self.used[n] = False
             return 0
+        
+    def build_inner(self):
+        new_grid = []
+        new_start = ["" for i in range(0,8)]
+        for y in range(0,self.size):
+            new_rows = new_start.copy()
+            for x in range(0,self.size):
+                (tile, state) = self.item[y][x]
+                inner = self.tiles[tile].inner(state)
+                print(y,x,self.tiles[tile].id,state)
+                for r in range(0,8):
+                    print(inner[r])
+                    new_rows[r] += inner[r]
+            new_grid.extend(new_rows)
+        return new_grid            
+
+    
+def rot(loc,state):
+    (x,y) = loc
+    if state == 0:
+        return (x,y)
+    if state == 1:
+        return (y,-x)
+    if state == 2:
+        return (-x,-y)
+    if state == 3:
+        return (-y,x)            
+    if state == 4:
+        return (-x,y)
+    if state == 5:
+        return (-y,-x)
+    if state == 6:
+        return (x,-y)
+    if state == 7:
+        return (y,x)            
+
+def delta(pos,dir):
+    return (pos[0]+dir[0],pos[1]+dir[1])
+
+def count_monsters(source_grid, monster, state):
+    size = len(source_grid)
+    # 0 for ., 1 for #, 2 for monster
+    grid = [[0 for i in range(0,size)] for j in range(0,size)]
+    monsters = 0
+
+    for j in range(0,size):
+        for i in range(0,size):
+            if source_grid[j][i] == '#':
+                grid[j][i] = 1
+
+    for j in range(0,size):
+        for i in range(0,size):
+            found = True
+            for y in range(0,len(monster)):
+                for x in range(0,len(monster[0])):
+                    if monster[y][x] == '#':
+                        (my,mx) = delta((j,i),rot((y,x),state))
+                        if my < 0 or my >= size or mx < 0 or mx >=size or grid[my][mx] == 0:
+                            found = False
+            if found:
+                print('Found at',j,i)
+                monsters += 1
+                for y in range(0,len(monster)):
+                    for x in range(0,len(monster[0])):
+                        if monster[y][x] == '#':
+                            (my,mx) = delta((j,i),rot((y,x),state))
+                            grid[my][mx] = 2
+
+    roughness = 0
+    for j in range(0,size):
+        for i in range(0,size):
+            if grid[j][i] == 1:
+                roughness += 1
+
+    return (monsters, roughness)                                            
 
 
 
-
-
-
-
-def part_a(filename):
+def both_parts(filename, part):
     lines = []
     tiles = []
     id = 0
@@ -105,11 +208,32 @@ def part_a(filename):
         size = 12
 
     grid = Grid(size, tiles)
-    return grid.recurse(0)
+    val = grid.recurse(0)
+    if part == 'a':
+        return val
 
+    new_grid = grid.build_inner()
+    for r in new_grid:
+        print(r)
+
+    monster = ["                  # ",
+               "#    ##    ##    ###",
+               " #  #  #  #  #  #   "]
+
+    r = 0
+
+    for state in range(0,8):
+        (monsters, roughness) = count_monsters(new_grid, monster, state)
+        print(state, monsters, roughness)
+        if monsters > 0:
+            r = roughness
+    return r        
+
+def part_a(filename):
+    return both_parts(filename, 'a')
 
 def part_b(filename):
-    return 0
+    return both_parts(filename,'b')
 
 
 def entry():
