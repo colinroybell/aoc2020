@@ -74,3 +74,7 @@ Refactor code to combine two parts. Add tests.
 ## Day 24
 
 Again add tests.
+
+## Day 25 
+
+Tidy and add tests.
