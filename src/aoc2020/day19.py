@@ -1,6 +1,8 @@
 import sys
 
-rules = {} 
+
+rules = {}
+
 
 class Rule:
     def __init__(self, n, letter, subrules):
@@ -16,7 +18,7 @@ class Rule:
             return self.list
         elif self.letter:
             self.list = set([self.letter])
-        else:    
+        else:
             self.list = set()
             for sr in self.subrules:
                 first = True
@@ -26,14 +28,14 @@ class Rule:
                         first = False
                     else:
                         ok_sub = rules[r].setup(part)
-                        new_ok = set()              
+                        new_ok = set()
                         for m in ok:
                             for n in ok_sub:
                                 new_ok.add(m + n)
-                        ok = new_ok       
+                        ok = new_ok
                 self.list = self.list.union(ok)
         self.initialised = True
-        return self.list 
+        return self.list
 
 
 def part_a(filename):
@@ -60,15 +62,14 @@ def part_a(filename):
                             lists.append(subrule)
                             subrule = []
                         else:
-                            subrule.append(int(i))    
-                    lists.append(subrule)                
-                rules[n] = Rule(n, letter,lists)
-                #print(rules[n].letter, rules[n].subrules)
+                            subrule.append(int(i))
+                    lists.append(subrule)
+                rules[n] = Rule(n, letter, lists)
             else:
-                test_lines.append(line)                
+                test_lines.append(line)
 
     passing = rules[0].setup('a')
-    count =0 
+    count = 0
     for line in test_lines:
         if line in passing:
             count += 1
@@ -99,40 +100,40 @@ def part_a(filename):
                             lists.append(subrule)
                             subrule = []
                         else:
-                            subrule.append(int(i))    
-                    lists.append(subrule)                
-                rules[n] = Rule(n, letter,lists)
-                #print(rules[n].letter, rules[n].subrules)
+                            subrule.append(int(i))
+                    lists.append(subrule)
+                rules[n] = Rule(n, letter, lists)
             else:
-                test_lines.append(line)                
+                test_lines.append(line)
 
     passing = rules[0].setup('a')
-    count =0 
+    count = 0
     for line in test_lines:
         if line in passing:
             count += 1
     return count
+
 
 def trial(line, state, m, n, subs):
     if state == 0:
         list_42 = rules[42].setup('b')
         # need to check at least one character, and leave one left for 31
-        for c in range(1,len(line)):
+        for c in range(1, len(line)):
             if line[0:c] in list_42:
-                if trial(line[c:], 0, m+1, n, subs + [line[0:c]]):
+                if trial(line[c:], 0, m + 1, n, subs + [line[0:c]]):
                     return True
     state = 1
     list_31 = rules[31].setup('b')
     if n >= m - 1 or m < 2:
         return False
     if line in list_31 and n < m:
-        #print("solved",subs,line, m, n)
         return True
-    for c in range(1,len(line)):
+    for c in range(1, len(line)):
         if line[0:c] in list_31:
-            if trial(line[c:],1,m,n+1, subs + [line[0:c]]):
+            if trial(line[c:], 1, m, n + 1, subs + [line[0:c]]):
                 return True
-    return False            
+    return False
+
 
 def part_b(filename):
     status = 1
@@ -158,22 +159,21 @@ def part_b(filename):
                             lists.append(subrule)
                             subrule = []
                         else:
-                            subrule.append(int(i))    
-                    lists.append(subrule)                
-                rules[n] = Rule(n, letter,lists)
+                            subrule.append(int(i))
+                    lists.append(subrule)
+                rules[n] = Rule(n, letter, lists)
             else:
-                test_lines.append(line)                
+                test_lines.append(line)
 
     passing = rules[0].setup('b')
-    # The effect of what we have is that we need things to be M 42s + N 31s, with M > N and N>=1 
+    # The effect of what we have is that we need things to be M 42s + N 31s,
+    # with M > N and N>=1
     count = 0
     for line in test_lines:
         ok = trial(line, 0, 0, 0, [])
-        #print(ok, len(line), line)
         if ok:
             count += 1
     return count
-
 
 
 def entry():

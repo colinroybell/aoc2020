@@ -2,18 +2,18 @@ import sys
 
 
 def part_a(string):
-    ptr = [-1 for i in range(0,10)]
+    ptr = [-1 for i in range(0, 10)]
     cups = []
     for c in string:
         cups.append(int(c))
 
-    for i in range(0,len(cups)-1):
-        ptr[cups[i]] = cups[i+1]
+    for i in range(0, len(cups) - 1):
+        ptr[cups[i]] = cups[i + 1]
     ptr[cups[-1]] = cups[0]
 
-    curr = cups[0]       
+    curr = cups[0]
 
-    for r in range(0,100):
+    for r in range(0, 100):
         n = curr
         p0 = ptr[curr]
         p1 = ptr[p0]
@@ -28,32 +28,32 @@ def part_a(string):
             if dest == 0:
                 dest = 9
         ptr[p2] = ptr[dest]
-        ptr[dest] = p0        
+        ptr[dest] = p0
         curr = ptr[curr]
     score = 0
     curr = ptr[1]
     while curr != 1:
         score = score*10 + curr
-        curr = ptr[curr] 
-    return score     
+        curr = ptr[curr]
+    return score
 
 
 def part_b(string):
-    ptr = [-1 for i in range(0,1000001)]
+    ptr = [-1 for i in range(0, 1000001)]
     cups = []
     for c in string:
         cups.append(int(c))
 
-    for i in range(0,len(cups)-1):
-        ptr[cups[i]] = cups[i+1]
+    for i in range(0, len(cups) - 1):
+        ptr[cups[i]] = cups[i + 1]
     ptr[cups[-1]] = 10
-    for i in range(10,1000000):
+    for i in range(10, 1000000):
         ptr[i] = i + 1
-    ptr[1000000] = cups[0]    
+    ptr[1000000] = cups[0]
 
-    curr = cups[0]       
+    curr = cups[0]
 
-    for r in range(0,10000000):
+    for r in range(0, 10000000):
         if r % 100000 == 0:
             print(r)
         n = curr
@@ -70,7 +70,7 @@ def part_b(string):
             if dest == 0:
                 dest = 1000000
         ptr[p2] = ptr[dest]
-        ptr[dest] = p0        
+        ptr[dest] = p0
         curr = ptr[curr]
     curr = 1
     return ptr[curr] * ptr[ptr[curr]]

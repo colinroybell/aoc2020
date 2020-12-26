@@ -6,4 +6,4 @@ def test_22a():
 
 
 def test_22b():
-    assert(part_b('data/day22_test2.txt') == 291)
+    assert(part_b('data/day22_test1.txt') == 291)
